@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>Esports Denz Arena — Home</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    background: #0a0e1a;
+    color: #fff;
+    padding-bottom: 90px;
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ============ TOP BAR ============ */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    background: linear-gradient(180deg, #131829, #0a0e1a);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+  }
+
+  .menu-icon {
+    font-size: 22px;
+    cursor: pointer;
+    color: #fff;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a2036;
+    border-radius: 10px;
+  }
+
+  .brand {
+    font-size: 15px;
+    font-weight: 800;
+    background: linear-gradient(90deg, #22c55e, #0ea5e9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.5px;
+  }
+
+  .top-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .coin-box {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: linear-gradient(135deg, #2a2f45, #1a2036);
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffd700;
+    border: 1px solid #ffd70033;
+  }
+
+  .coin-icon {
+    width: 16px;
+    height: 16px;
+    background: radial-gradient(circle at 30% 30%, #ffe066, #d4a017);
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: inset 0 -2px 3px rgba(0,0,0,0.3);
+  }
+
+  .bell {
+    font-size: 18px;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a2036;
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .bell::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 8px;
+    height: 8px;
+    background: #ef4444;
+    border-radius: 50%;
+    border: 2px solid #1a2036;
+  }
+
+  /* ============ HERO BANNER ============ */
+  .hero {
+    margin: 16px;
+    height: 160px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #7c2d12 0%, #991b1b 50%, #1e3a8a 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(220, 38, 38, 0.25);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.15), transparent 60%);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 20px,
+      rgba(255,255,255,0.03) 20px,
+      rgba(255,255,255,0.03) 40px
+    );
+    animation: slide 20s linear infinite;
+  }
+
+  @keyframes slide {
+    from { transform: translate(0, 0); }
+    to { transform: translate(40px, 40px); }
+  }
+
+  .best-badge {
+    position: relative;
+    z-index: 2;
+    background: #dc2626;
+    color: #fff;
+    font-size: 26px;
+    font-weight: 900;
+    padding: 10px 34px;
+    border: 4px solid #fff;
+    letter-spacing: 3px;
+    transform: rotate(-3deg);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6), inset 0 -4px 0 rgba(0,0,0,0.2);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+  }
+
+  /* ============ SECTION TITLE ============ */
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    padding: 16px 18px 10px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .section-title span:last-child {
+    font-size: 12px;
+    color: #00BFA5;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* ============ HORIZONTAL SCROLL ============ */
+  .scroll-row {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 4px 18px 18px;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+  }
+  .scroll-row::-webkit-scrollbar { display: none; }
+
+  /* ============ GAME CARD ============ */
+  .game-card {
+    flex: 0 0 140px;
+    background: #131829;
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.25s;
+    scroll-snap-align: start;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    border: 1px solid #ffffff0d;
+  }
+
+  .game-card:active { transform: scale(0.96); }
+  .game-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(59, 91, 219, 0.3); }
+
+  .game-thumb {
+    height: 100px;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 6px;
+  }
+
+  .game-thumb::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.7));
+  }
+
+  .play-badge {
+    position: relative;
+    z-index: 2;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(4px);
+    font-size: 9px;
+    padding: 3px 8px;
+    border-radius: 10px;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: #fff;
+    border: 1px solid #ffffff33;
+  }
+
+  .live-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 2;
+    background: #dc2626;
+    font-size: 9px;
+    padding: 3px 8px;
+    border-radius: 10px;
+    letter-spacing: 1px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .live-dot {
+    width: 5px;
+    height: 5px;
+    background: #fff;
+    border-radius: 50%;
+    animation: blink 1s infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .game-name {
+    padding: 10px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ============ WIDE CARD ============ */
+  .wide-card { flex: 0 0 210px; }
+  .wide-card .game-thumb { height: 110px; }
+
+  /* ============ BOTTOM NAV ============ */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 480px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, #1a1f33, #131829);
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0 14px;
+    border-top: 1px solid #ffffff1a;
+    box-shadow: 0 -8px 30px rgba(0,0,0,0.5);
+    border-top-left-radius: 22px;
+    border-top-right-radius: 22px;
+  }
+
+  .nav-item {
+    flex: 1;
+    text-align: center;
+    font-size: 10px;
+    color: #8b93a7;
+    cursor: pointer;
+    transition: 0.2s;
+    font-weight: 500;
+  }
+
+  .nav-item.active {
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .nav-item.active .nav-icon {
+    background: linear-gradient(135deg, #dc2626, #ef4444);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.5);
+    color: #fff;
+  }
+
+  .nav-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    width: 36px;
+    height: 36px;
+    margin: 0 auto 4px;
+    border-radius: 12px;
+    transition: 0.2s;
+  }
+
+  /* ============ CATEGORY PILLS ============ */
+  .cat-pills {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 0 18px 14px;
+    scrollbar-width: none;
+  }
+  .cat-pills::-webkit-scrollbar { display: none; }
+
+  .pill {
+    flex: 0 0 auto;
+    padding: 7px 16px;
+    background: #131829;
+    border: 1px solid #ffffff1a;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #8b93a7;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .pill.active {
+    background: linear-gradient(135deg, #3B5BDB, #6366f1);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(59, 91, 219, 0.4);
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="menu-icon">☰</div>
+  <div class="brand">ESPORTS DENZ ARENA</div>
+  <div class="top-right">
+    <div class="coin-box">
+      <span class="coin-icon"></span> 75
+    </div>
+    <div class="bell">🔔</div>
+  </div>
+</div>
+
+<!-- HERO BANNER -->
+<div class="hero">
+  <div class="best-badge">BEST</div>
+</div>
+
+<!-- CATEGORY PILLS -->
+<div class="cat-pills">
+  <div class="pill active">All</div>
+  <div class="pill">Free Fire</div>
+  <div class="pill">BGMI</div>
+  <div class="pill">Ludo</div>
+  <div class="pill">Cricket</div>
+  <div class="pill">Quiz</div>
+</div>
+
+<!-- PLAY NOW -->
+<div class="section-title">
+  <span>🔥 Play Now</span>
+  <span>See all</span>
+</div>
+<div class="scroll-row">
+  <div class="game-card" onclick="openGame('Clash of Clans')">
+    <div class="game-thumb" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400')">
+      <span class="play-badge">PLAY</span>
+    </div>
+    <div class="game-name">Clash of Clans</div>
+  </div>
+  <div class="game-card" onclick="openGame('Free Fire')">
+    <div class="game-thumb" style="background-image: url('https://images.unsplash.com/photo-1542751110-97427bbecf20?w=400')">
+      <span class="live-badge"><span class="live-dot"></span>LIVE</span>
+    </div>
+    <div class="game-name">Free Fire</div>
+  </div>
+  <div class="game-card" onclick="openGame('Quiz Time')">
+    <div class="game-thumb" style="background-image: url('https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=400')">
+      <span class="play-badge">PLAY</span>
+    </div>
+    <div class="game-name">Quiz Time</div>
+  </div>
+  <div class="game-card" onclick="openGame('Ludo King')">
+    <div class="game-thumb" style="background-image: url('https://images.unsplash.com/photo-1611996575749-79a3a250f948?w=400')">
+      <span class="play-badge">PLAY</span>
+    </div>
+    <div class="game-name">Ludo King</div>
+  </div>
+</div>
+
+<!-- CRICKET -->
+<div class="section-title">
+  <span>🏏 Cricket</span>
+  <span>See all</span>
+</div>
+<div class="scroll-row">
+  <div class="game-card wide-card" onclick="openGame('Fantasy Cricket')">
+    <div class="game-thumb" style="background-image: url('https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=500')">
+      <span class="play-badge">PLAY</span>
+    </div>
+    <div class="game-name">Fantasy Cricket</div>
+  </div>
+  <div class="game-card wide-card" onclick="openGame('FanBattle')">
+    <div class="game-thumb" style="background-image: url('https://images.unsplash.com/photo-1593341646782-e0b495cff86d?w=500')">
+      <span class="play-badge">PLAY</span>
+    </div>
+    <div class="game-name">FanBattle</div>
+  </div>
+</div>
+
+<!-- ESPORTS -->
+<div class="section-title">
+  <span>🎮 eSports</span>
+  <span>See all</span>
+</div>
+<div class="scroll-row">
+  <div class="game-card" onclick="openGame('Free Fire')">
+    <div class="game-thumb" style="background-image: url('https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=400')">
+      <span class="live-badge"><span class="live-dot"></span>LIVE</span>
+    </div>
+    <div class="game-name">Free Fire</div>
+  </div>
+  <div class="game-card" onclick="openGame('BGMI')">
+    <div class="game-thumb" style="background-image: url('https://images.unsplash.com/photo-1587092974408-0f56b1a2f5c6?w=400')">
+      <span class="play-badge">PLAY</span>
+    </div>
+    <div class="game-name">BGMI</div>
+  </div>
+  <div class="game-card" onclick="openGame('Free Fire Max')">
+    <div class="game-thumb" style="background-image: url('https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400')">
+      <span class="play-badge">PLAY</span>
+    </div>
+    <div class="game-name">Free Fire Max</div>
+  </div>
+  <div class="game-card" onclick="openGame('FF Clash Squad')">
+    <div class="game-thumb" style="background-image: url('https://images.unsplash.com/photo-1560253023-3ec5d502959f?w=400')">
+      <span class="play-badge">PLAY</span>
+    </div>
+    <div class="game-name">FF Clash Squad</div>
+  </div>
+  <div class="game-card" onclick="openGame('Team Deathmatch')">
+    <div class="game-thumb" style="background-image: url('https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=400')">
+      <span class="play-badge">PLAY</span>
+    </div>
+    <div class="game-name">Team Deathmatch</div>
+  </div>
+  <div class="game-card" onclick="openGame('PUBG Lite')">
+    <div class="game-thumb" style="background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400')">
+      <span class="play-badge">PLAY</span>
+    </div>
+    <div class="game-name">PUBG Lite</div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <div class="nav-item" onclick="goPage('gifts')">
+    <div class="nav-icon">🎁</div>Gifts
+  </div>
+  <div class="nav-item" onclick="goPage('quizzes')">
+    <div class="nav-icon">❓</div>Quizzes
+  </div>
+  <div class="nav-item active" onclick="goPage('home')">
+    <div class="nav-icon">🏠</div>Home
+  </div>
+  <div class="nav-item" onclick="goPage('winners')">
+    <div class="nav-icon">🏆</div>Winners
+  </div>
+  <div class="nav-item" onclick="goPage('profile')">
+    <div class="nav-icon">👤</div>Profile
+  </div>
+</div>
+
+<script>
+  // ইউজার লগইন করেছে কিনা চেক
+  const user = localStorage.getItem('denz_user');
+  if (!user) {
+    window.location.href = 'index.html';
+  }
+
+  // গেমে ক্লিক করলে
+  function openGame(name) {
+    localStorage.setItem('selected_game', name);
+    window.location.href = 'tournaments.html';
+  }
+
+  // নিচের ট্যাবে ক্লিক করলে
+  function goPage(page) {
+    if (page === 'profile') {
+      window.location.href = 'profile.html';
+    } else if (page === 'home') {
+      return;
+    } else {
+      alert(page.charAt(0).toUpperCase() + page.slice(1) + ' page coming soon!');
+    }
+  }
+
+  // ক্যাটাগরি pill এ ক্লিক করলে
+  document.querySelectorAll('.pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
