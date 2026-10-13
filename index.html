@@ -2,213 +2,545 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Esports Denz Arena — Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>LG Tousif Group — Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
 
   body {
     min-height: 100vh;
-    background: #0F1420;
+    background: #05070f;
+    color: #fff;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ============ SPLASH SCREEN ============ */
+  #splash {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: radial-gradient(circle at center, #0a0e1a 0%, #05070f 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s ease, visibility 0.8s;
+  }
+
+  #splash.hide {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  /* Particle background */
+  .particles {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #3B5BDB;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #3B5BDB, 0 0 20px #3B5BDB;
+    animation: float 8s linear infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(100vh) scale(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-20vh) scale(1); opacity: 0; }
+  }
+
+  /* Logo animation */
+  .splash-logo {
+    width: 140px;
+    height: 140px;
+    position: relative;
+    z-index: 2;
+    animation: logoIn 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  }
+
+  @keyframes logoIn {
+    0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  .splash-logo svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 30px #3B5BDB);
+  }
+
+  .splash-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    margin-top: 24px;
+    z-index: 2;
+    background: linear-gradient(90deg, #22c55e, #0ea5e9, #3B5BDB, #22c55e);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 3s linear infinite;
+  }
+
+  @keyframes shine {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  .splash-sub {
+    font-size: 11px;
+    letter-spacing: 6px;
+    color: #8b93a7;
+    margin-top: 8px;
+    z-index: 2;
+    animation: fadeIn 1.5s ease 0.5s both;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Loading bar */
+  .loading-bar {
+    width: 180px;
+    height: 3px;
+    background: #1a2036;
+    border-radius: 2px;
+    margin-top: 40px;
+    overflow: hidden;
+    z-index: 2;
+  }
+
+  .loading-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #22c55e, #0ea5e9);
+    border-radius: 2px;
+    animation: load 2s ease forwards;
+    box-shadow: 0 0 15px #0ea5e9;
+  }
+
+  @keyframes load {
+    0% { width: 0%; }
+    100% { width: 100%; }
+  }
+
+  /* ============ LOGIN PAGE ============ */
+  #loginPage {
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px;
+    opacity: 0;
+    transition: opacity 0.6s ease 0.2s;
   }
+
+  #loginPage.show { opacity: 1; }
 
   .login-box {
     width: 100%;
     max-width: 380px;
+    position: relative;
+    z-index: 2;
   }
 
-  /* LOGO */
-  .logo {
-    width: 160px;
-    height: 160px;
-    margin: 0 auto 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  /* Logo top */
+  .top-logo {
+    text-align: center;
+    margin-bottom: 30px;
   }
 
-  .logo svg {
-    width: 100%;
-    height: 100%;
+  .top-logo .logo-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 12px;
+    filter: drop-shadow(0 0 20px #3B5BDB88);
+    animation: floatLogo 4s ease-in-out infinite;
   }
 
-  /* LABEL */
-  label {
+  @keyframes floatLogo {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .top-logo h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, #22c55e, #0ea5e9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .top-logo p {
+    font-size: 11px;
+    color: #8b93a7;
+    margin-top: 4px;
+    letter-spacing: 2px;
+  }
+
+  /* Welcome text */
+  .welcome h2 {
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+
+  .welcome p {
+    font-size: 13px;
+    color: #8b93a7;
+    margin-bottom: 28px;
+  }
+
+  /* Input */
+  .input-group {
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .input-group label {
     display: block;
-    color: #fff;
+    font-size: 12px;
     font-weight: 600;
-    font-size: 15px;
+    color: #8b93a7;
     margin-bottom: 8px;
+    letter-spacing: 0.5px;
   }
 
-  /* INPUT WRAPPER */
   .input-wrap {
     position: relative;
-    margin-bottom: 18px;
   }
 
-  input {
+  .input-wrap input {
     width: 100%;
-    padding: 14px 44px 14px 16px;
-    border: none;
-    border-radius: 10px;
-    background: #fff;
-    color: #333;
-    font-size: 15px;
+    padding: 15px 46px 15px 46px;
+    background: #131829;
+    border: 1.5px solid #ffffff0f;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 14px;
     outline: none;
+    transition: 0.25s;
   }
 
-  input::placeholder { color: #aaa; }
+  .input-wrap input::placeholder { color: #555e75; }
 
-  input:focus {
-    box-shadow: 0 0 0 2px #3B5BDB;
+  .input-wrap input:focus {
+    border-color: #3B5BDB;
+    background: #1a2036;
+    box-shadow: 0 0 0 4px #3B5BDB22;
   }
 
-  /* ICON INSIDE INPUT */
-  .icon-right {
+  .input-icon-left {
     position: absolute;
-    right: 14px;
+    left: 15px;
     top: 50%;
     transform: translateY(-50%);
+    color: #555e75;
+    font-size: 16px;
+    pointer-events: none;
+  }
+
+  .input-icon-right {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #555e75;
+    font-size: 16px;
     cursor: pointer;
-    color: #555;
-    font-size: 18px;
     user-select: none;
   }
 
-  .check { color: #22c55e; display: none; }
-  .check.show { display: block; }
+  .check-icon {
+    color: #22c55e !important;
+    display: none;
+  }
 
-  /* FORGOT */
-  .forgot {
+  .check-icon.show { display: block !important; }
+
+  /* Forgot */
+  .forgot-row {
     text-align: right;
+    margin-top: -6px;
     margin-bottom: 22px;
   }
 
-  .forgot a {
+  .forgot-row a {
     color: #00BFA5;
-    font-size: 14px;
-    font-weight: 500;
-    text-decoration: none;
-  }
-
-  /* LOGIN BUTTON */
-  .btn-login {
-    width: 100%;
-    padding: 15px;
-    background: #3B5BDB;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    font-size: 17px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 0.2s;
-  }
-
-  .btn-login:hover { background: #2f4bbf; }
-
-  .btn-login:active { transform: scale(0.98); }
-
-  /* FOOTER */
-  .footer {
-    text-align: center;
-    color: #ccc;
-    font-size: 14px;
-    margin-top: 24px;
-  }
-
-  .footer a {
-    color: #3B5BDB;
+    font-size: 13px;
     font-weight: 600;
     text-decoration: none;
   }
 
-  /* ERROR */
-  .error {
-    color: #ef4444;
+  /* Login button */
+  .btn-primary {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #3B5BDB, #6366f1);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: 0.25s;
+    box-shadow: 0 8px 20px #3B5BDB44;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, #ffffff33, transparent);
+    transition: 0.6s;
+  }
+
+  .btn-primary:hover::before { left: 100%; }
+  .btn-primary:active { transform: scale(0.98); }
+
+  /* Divider */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0;
+    color: #555e75;
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #ffffff0f;
+  }
+
+  /* Signup link */
+  .signup-row {
+    text-align: center;
+    color: #8b93a7;
     font-size: 13px;
-    margin-top: -12px;
-    margin-bottom: 14px;
+  }
+
+  .signup-row a {
+    color: #3B5BDB;
+    font-weight: 700;
+    text-decoration: none;
+    margin-left: 4px;
+  }
+
+  /* Error */
+  .error-msg {
+    color: #ef4444;
+    font-size: 12px;
+    margin-top: -8px;
+    margin-bottom: 12px;
     display: none;
   }
 
-  .error.show { display: block; }
+  .error-msg.show { display: block; }
+
+  /* Background decor */
+  .bg-decor {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .bg-decor::before {
+    content: '';
+    position: absolute;
+    top: -100px; left: -100px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, #3B5BDB44, transparent 70%);
+    border-radius: 50%;
+    animation: pulse 6s ease-in-out infinite;
+  }
+
+  .bg-decor::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; right: -100px;
+    width: 350px; height: 350px;
+    background: radial-gradient(circle, #00BFA544, transparent 70%);
+    border-radius: 50%;
+    animation: pulse 6s ease-in-out infinite 3s;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+  }
 </style>
 </head>
 <body>
 
-<div class="login-box">
-
-  <!-- LOGO (placeholder) -->
-  <div class="logo">
+<!-- SPLASH SCREEN -->
+<div id="splash">
+  <div class="particles" id="particles"></div>
+  <div class="splash-logo">
     <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+        <linearGradient id="grad1" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stop-color="#22c55e"/>
           <stop offset="100%" stop-color="#0ea5e9"/>
         </linearGradient>
+        <linearGradient id="grad2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#3B5BDB"/>
+          <stop offset="100%" stop-color="#6b21a8"/>
+        </linearGradient>
       </defs>
-      <path d="M100 10 L180 45 L180 120 Q180 170 100 190 Q20 170 20 120 L20 45 Z"
-            fill="#0F1420" stroke="url(#g)" stroke-width="6"/>
-      <text x="100" y="95" text-anchor="middle" fill="#fff"
-            font-family="Arial" font-weight="bold" font-size="20">ESPORTS</text>
-      <text x="100" y="125" text-anchor="middle" fill="url(#g)"
-            font-family="Arial" font-weight="bold" font-size="22">DENZ</text>
+      <path d="M100 10 L180 45 L180 120 Q180 175 100 195 Q20 175 20 120 L20 45 Z"
+            fill="url(#grad2)" stroke="url(#grad1)" stroke-width="4"/>
+      <path d="M100 30 L160 55 L160 115 Q160 155 100 172 Q40 155 40 115 L40 55 Z"
+            fill="#0a0e1a" stroke="url(#grad1)" stroke-width="2"/>
+      <text x="100" y="100" text-anchor="middle" fill="#fff"
+            font-family="Orbitron" font-weight="900" font-size="22">LG</text>
+      <text x="100" y="130" text-anchor="middle" fill="url(#grad1)"
+            font-family="Orbitron" font-weight="900" font-size="16">TOUSIF</text>
       <text x="100" y="150" text-anchor="middle" fill="#fff"
-            font-family="Arial" font-weight="bold" font-size="20">ARENA</text>
+            font-family="Orbitron" font-weight="700" font-size="11">GROUP</text>
     </svg>
   </div>
-
-  <!-- EMAIL -->
-  <label>Email</label>
-  <div class="input-wrap">
-    <input type="email" id="email" placeholder="example@gmail.com" />
-    <span class="icon-right check" id="checkIcon">✔</span>
+  <div class="splash-title">LG TOUSIF GROUP</div>
+  <div class="splash-sub">PREMIUM ESPORTS ARENA</div>
+  <div class="loading-bar">
+    <div class="loading-fill"></div>
   </div>
+</div>
 
-  <!-- PASSWORD -->
-  <label>Password</label>
-  <div class="input-wrap">
-    <input type="password" id="password" placeholder="Enter your password" />
-    <span class="icon-right" id="eyeIcon" onclick="togglePassword()">👁</span>
+<!-- BACKGROUND DECOR -->
+<div class="bg-decor"></div>
+
+<!-- LOGIN PAGE -->
+<div id="loginPage">
+  <div class="login-box">
+
+    <!-- TOP LOGO -->
+    <div class="top-logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="lg1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#22c55e"/>
+              <stop offset="100%" stop-color="#0ea5e9"/>
+            </linearGradient>
+          </defs>
+          <path d="M100 15 L175 48 L175 118 Q175 168 100 187 Q25 168 25 118 L25 48 Z"
+                fill="#0a0e1a" stroke="url(#lg1)" stroke-width="5"/>
+          <text x="100" y="100" text-anchor="middle" fill="#fff"
+                font-family="Orbitron" font-weight="900" font-size="26">LG</text>
+          <text x="100" y="132" text-anchor="middle" fill="url(#lg1)"
+                font-family="Orbitron" font-weight="700" font-size="14">TOUSIF</text>
+        </svg>
+      </div>
+      <h1>LG TOUSIF GROUP</h1>
+      <p>PREMIUM ESPORTS ARENA</p>
+    </div>
+
+    <!-- WELCOME -->
+    <div class="welcome">
+      <h2>Welcome Back 👋</h2>
+      <p>Login to continue your journey</p>
+    </div>
+
+    <!-- EMAIL -->
+    <div class="input-group">
+      <label>Email Address</label>
+      <div class="input-wrap">
+        <span class="input-icon-left">✉</span>
+        <input type="email" id="email" placeholder="example@gmail.com" />
+        <span class="input-icon-right check-icon" id="checkIcon">✔</span>
+      </div>
+    </div>
+
+    <!-- PASSWORD -->
+    <div class="input-group">
+      <label>Password</label>
+      <div class="input-wrap">
+        <span class="input-icon-left">🔒</span>
+        <input type="password" id="password" placeholder="Enter your password" />
+        <span class="input-icon-right" id="eyeIcon" onclick="togglePassword()">👁</span>
+      </div>
+    </div>
+
+    <!-- ERROR -->
+    <p class="error-msg" id="errorMsg">Invalid credentials</p>
+
+    <!-- FORGOT -->
+    <div class="forgot-row">
+      <a href="forgot.html">Forget password?</a>
+    </div>
+
+    <!-- LOGIN BUTTON -->
+    <button class="btn-primary" onclick="loginUser()">Login</button>
+
+    <!-- DIVIDER -->
+    <div class="divider">OR</div>
+
+    <!-- SIGNUP -->
+    <div class="signup-row">
+      Don't have an account?
+      <a href="signup.html">Sign Up</a>
+    </div>
+
   </div>
-
-  <!-- ERROR MESSAGE -->
-  <p class="error" id="errorMsg">Please fill all fields correctly.</p>
-
-  <!-- FORGOT -->
-  <div class="forgot">
-    <a href="#">Forget password?</a>
-  </div>
-
-  <!-- LOGIN BUTTON -->
-  <button class="btn-login" onclick="loginUser()">Login</button>
-
-  <!-- FOOTER -->
-  <p class="footer">
-    Don't have an account? <a href="#" onclick="alert('Signup page coming soon!')">Signup</a>
-  </p>
 </div>
 
 <script>
+  /* ========== SPLASH PARTICLES ========== */
+  const particlesEl = document.getElementById('particles');
+  for (let i = 0; i < 25; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDelay = Math.random() * 8 + 's';
+    p.style.animationDuration = (6 + Math.random() * 6) + 's';
+    if (Math.random() > 0.5) {
+      p.style.background = '#00BFA5';
+      p.style.boxShadow = '0 0 10px #00BFA5, 0 0 20px #00BFA5';
+    }
+    particlesEl.appendChild(p);
+  }
+
+  /* ========== SPLASH HIDE ========== */
+  setTimeout(() => {
+    document.getElementById('splash').classList.add('hide');
+    document.getElementById('loginPage').classList.add('show');
+  }, 2600);
+
+  /* ========== LOGIN LOGIC ========== */
   const emailInput = document.getElementById('email');
   const passInput  = document.getElementById('password');
   const checkIcon  = document.getElementById('checkIcon');
   const eyeIcon    = document.getElementById('eyeIcon');
   const errorMsg   = document.getElementById('errorMsg');
 
-  // Email checkmark
   emailInput.addEventListener('input', () => {
     const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value);
     checkIcon.classList.toggle('show', valid);
   });
 
-  // Password show/hide
   function togglePassword() {
     if (passInput.type === 'password') {
       passInput.type = 'text';
@@ -219,7 +551,6 @@
     }
   }
 
-  // Login
   function loginUser() {
     const email = emailInput.value.trim();
     const pass  = passInput.value.trim();
@@ -244,11 +575,15 @@
 
     errorMsg.classList.remove('show');
 
-    // Save to localStorage (fake login for now)
-    localStorage.setItem('denz_user', JSON.stringify({ email }));
-    alert('Login successful! ✅');
+    // Save user
+    localStorage.setItem('denz_user', JSON.stringify({ email, name: email.split('@')[0] }));
     window.location.href = 'home.html';
   }
+
+  // Enter key দিয়ে login
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') loginUser();
+  });
 </script>
 
 </body>
