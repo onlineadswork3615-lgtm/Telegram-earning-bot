@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>Tournaments — Esports Denz Arena</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    background: #0a0e1a;
+    color: #fff;
+    padding-bottom: 90px;
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 18px;
+    background: #131829;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .back-btn {
+    font-size: 22px;
+    color: #fff;
+    cursor: pointer;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a2036;
+    border-radius: 10px;
+    text-decoration: none;
+  }
+
+  .header-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #fff;
+  }
+
+  .help-btn {
+    background: #1a2036;
+    color: #8b93a7;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* FILTER CHIPS */
+  .filters {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 14px 18px;
+    scrollbar-width: none;
+  }
+  .filters::-webkit-scrollbar { display: none; }
+
+  .chip {
+    flex: 0 0 auto;
+    padding: 7px 14px;
+    background: #131829;
+    border: 1px solid #ffffff1a;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .chip.purple { background: #6b21a8; border-color: transparent; }
+  .chip.orange { background: #ea580c; border-color: transparent; }
+  .chip.dark   { background: #1a2036; }
+
+  /* TOURNAMENT CARD */
+  .tournament-card {
+    margin: 0 16px 16px;
+    background: #131829;
+    border-radius: 16px;
+    padding: 16px;
+    border: 1px solid #ffffff0d;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  }
+
+  .card-header {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 8px;
+    letter-spacing: 0.3px;
+  }
+
+  .tag.solo { background: #6b21a8; color: #fff; }
+  .tag.map  { background: #ea580c; color: #fff; }
+  .tag.time { background: #1a2036; color: #fff; border: 1px solid #ffffff1a; }
+
+  .tournament-title {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 14px;
+    color: #fff;
+  }
+
+  /* STATS ROW */
+  .stats-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-top: 1px solid #ffffff0d;
+    border-bottom: 1px solid #ffffff0d;
+    margin-bottom: 12px;
+  }
+
+  .stat {
+    flex: 1;
+    text-align: center;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    color: #8b93a7;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .stat-value {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .stat-value.gold { color: #ffd700; }
+  .stat-value.green { color: #22c55e; }
+
+  .coin-inline {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: radial-gradient(circle at 30% 30%, #ffe066, #d4a017);
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 3px;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    margin-bottom: 14px;
+  }
+
+  .progress-bar {
+    height: 6px;
+    background: #1a2036;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #dc2626, #ef4444);
+    border-radius: 4px;
+    transition: width 0.4s;
+  }
+
+  .progress-text {
+    font-size: 11px;
+    color: #8b93a7;
+  }
+
+  .progress-text strong { color: #fff; }
+
+  /* ACTION BUTTONS */
+  .actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .btn-join {
+    background: #16a34a;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .btn-join:active { transform: scale(0.95); }
+
+  .btn-live {
+    flex: 1;
+    background: #dc2626;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .btn-live:active { transform: scale(0.97); }
+
+  .btn-pass {
+    flex: 1;
+    background: #dc2626;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .btn-pass:active { transform: scale(0.97); }
+
+  /* BOTTOM NAV */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 480px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, #1a1f33, #131829);
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0 14px;
+    border-top: 1px solid #ffffff1a;
+    box-shadow: 0 -8px 30px rgba(0,0,0,0.5);
+    border-top-left-radius: 22px;
+    border-top-right-radius: 22px;
+  }
+
+  .nav-item {
+    flex: 1;
+    text-align: center;
+    font-size: 10px;
+    color: #8b93a7;
+    cursor: pointer;
+    font-weight: 500;
+  }
+
+  .nav-item.active { color: #fff; font-weight: 700; }
+
+  .nav-item.active .nav-icon {
+    background: linear-gradient(135deg, #dc2626, #ef4444);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.5);
+    color: #fff;
+  }
+
+  .nav-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    width: 36px;
+    height: 36px;
+    margin: 0 auto 4px;
+    border-radius: 12px;
+    transition: 0.2s;
+  }
+
+  /* EMPTY STATE */
+  .empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: #8b93a7;
+  }
+
+  .empty-icon { font-size: 48px; margin-bottom: 12px; opacity: 0.5; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <a href="home.html" class="back-btn">←</a>
+  <div class="header-title">Tournaments</div>
+  <button class="help-btn" onclick="alert('How it works:\n1. Join a tournament\n2. Play the match\n3. Win prizes!')">How To Work?</button>
+</div>
+
+<!-- FILTERS -->
+<div class="filters">
+  <div class="chip purple">Solo</div>
+  <div class="chip orange">Bermuda Map</div>
+  <div class="chip dark">0 Days</div>
+  <div class="chip dark">0 Hr</div>
+  <div class="chip dark">0 Min</div>
+</div>
+
+<!-- TOURNAMENT LIST (loaded from localStorage or defaults) -->
+<div id="tournamentList"></div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <div class="nav-item" onclick="alert('Gifts coming soon')">
+    <div class="nav-icon">🎁</div>Gifts
+  </div>
+  <div class="nav-item" onclick="alert('Quizzes coming soon')">
+    <div class="nav-icon">❓</div>Quizzes
+  </div>
+  <div class="nav-item active" onclick="window.location.href='home.html'">
+    <div class="nav-icon">🏠</div>Home
+  </div>
+  <div class="nav-item" onclick="alert('Winners coming soon')">
+    <div class="nav-icon">🏆</div>Winners
+  </div>
+  <div class="nav-item" onclick="window.location.href='profile.html'">
+    <div class="nav-icon">👤</div>Profile
+  </div>
+</div>
+
+<script>
+  // লগইন চেক
+  const user = localStorage.getItem('denz_user');
+  if (!user) window.location.href = 'index.html';
+
+  // ডিফল্ট টুর্নামেন্ট (admin panel থেকে পরে add করা যাবে)
+  const defaultTournaments = [
+    {
+      id: 1,
+      title: 'FF Full Map Solo Tournament',
+      mode: 'Solo',
+      map: 'Bermuda Map',
+      days: '0 Days', hr: '0 Hr', min: '0 Min',
+      date: 'Sat, Aug 30, 2025 4:00 PM',
+      prize: 200,
+      perKill: 0.00,
+      joined: 47,
+      max: 200
+    },
+    {
+      id: 2,
+      title: 'FF Full Map Solo Tournament',
+      mode: 'Solo',
+      map: 'Bermuda Map',
+      days: '0 Days', hr: '5 Hr', min: '55 Min',
+      date: 'Sat, Aug 30, 2025 10:00 PM',
+      prize: 200,
+      perKill: 0.00,
+      joined: 33,
+      max: 200
+    }
+  ];
+
+  // localStorage থেকে টুর্নামেন্ট লোড (admin panel পরে set করবে)
+  function getTournaments() {
+    const saved = localStorage.getItem('denz_tournaments');
+    return saved ? JSON.parse(saved) : defaultTournaments;
+  }
+
+  function renderTournaments() {
+    const list = getTournaments();
+    const container = document.getElementById('tournamentList');
+
+    if (list.length === 0) {
+      container.innerHTML = `
+        <div class="empty">
+          <div class="empty-icon">🎮</div>
+          <p>No tournaments available</p>
+          <p style="font-size:12px;margin-top:6px;">Check back soon!</p>
+        </div>`;
+      return;
+    }
+
+    container.innerHTML = list.map(t => {
+      const left = t.max - t.joined;
+      const percent = (t.joined / t.max) * 100;
+
+      return `
+        <div class="tournament-card">
+          <div class="card-header">
+            <span class="tag solo">${t.mode}</span>
+            <span class="tag map">${t.map}</span>
+            <span class="tag time">${t.days}</span>
+            <span class="tag time">${t.hr}</span>
+            <span class="tag time">${t.min}</span>
+          </div>
+
+          <div class="tournament-title">${t.title}</div>
+
+          <div class="stats-row">
+            <div class="stat">
+              <div class="stat-label">Date</div>
+              <div class="stat-value" style="font-size:11px;">${t.date}</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Prize Pool</div>
+              <div class="stat-value green">${t.prize}</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Per Kill</div>
+              <div class="stat-value gold"><span class="coin-inline"></span>${t.perKill.toFixed(2)}</div>
+            </div>
+          </div>
+
+          <div class="progress-wrap">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:${percent}%"></div>
+            </div>
+            <div class="progress-text"><strong>${t.joined}/${t.max}</strong> Only <strong>${left}</strong> Spots Left</div>
+          </div>
+
+          <div class="actions">
+            <button class="btn-join" onclick="joinTournament(${t.id})">Free Join</button>
+            <button class="btn-live" onclick="alert('Gameplay will be live soon!')">Gameplay Live</button>
+          </div>
+
+          <div style="margin-top:10px;">
+            <button class="btn-pass" style="width:100%;" onclick="showCredentials(${t.id})">Id & Password</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function joinTournament(id) {
+    const list = getTournaments();
+    const t = list.find(x => x.id === id);
+
+    if (!t) return;
+
+    if (t.joined >= t.max) {
+      alert('❌ Tournament is full!');
+      return;
+    }
+
+    t.joined += 1;
+    localStorage.setItem('denz_tournaments', JSON.stringify(list));
+
+    alert('✅ Joined successfully!\n\nMatch: ' + t.title);
+    renderTournaments();
+  }
+
+  function showCredentials(id) {
+    alert('🔐 Room ID & Password\n\nWill be available 10 minutes before match start.');
+  }
+
+  renderTournaments();
+</script>
+
+</body>
+</html>
