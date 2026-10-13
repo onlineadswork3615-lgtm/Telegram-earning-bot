@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>Profile — Esports Denz Arena</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    background: #0a0e1a;
+    color: #fff;
+    padding-bottom: 90px;
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+
+  /* TOP NAVY SECTION */
+  .profile-top {
+    background: linear-gradient(180deg, #1a1f33, #0a0e1a);
+    padding: 30px 20px 24px;
+    text-align: center;
+    position: relative;
+  }
+
+  .avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00BFA5, #0ea5e9);
+    margin: 0 auto 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+    border: 3px solid #1a2036;
+    box-shadow: 0 8px 24px rgba(0, 191, 165, 0.3);
+  }
+
+  .username {
+    font-size: 18px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+
+  .arena-coin {
+    font-size: 13px;
+    color: #8b93a7;
+  }
+
+  .arena-coin strong {
+    color: #ffd700;
+    font-size: 15px;
+  }
+
+  /* STATS CARD */
+  .stats-card {
+    margin: -10px 16px 20px;
+    background: #131829;
+    border-radius: 16px;
+    padding: 20px 0;
+    display: flex;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    border: 1px solid #ffffff0d;
+    position: relative;
+    z-index: 2;
+  }
+
+  .stat-item {
+    flex: 1;
+    text-align: center;
+    position: relative;
+  }
+
+  .stat-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 20%;
+    height: 60%;
+    width: 1px;
+    background: #ffffff1a;
+  }
+
+  .stat-num {
+    font-size: 22px;
+    font-weight: 900;
+    color: #3B5BDB;
+    margin-bottom: 4px;
+  }
+
+  .stat-lbl {
+    font-size: 11px;
+    color: #8b93a7;
+    font-weight: 500;
+  }
+
+  /* MENU LIST */
+  .menu-list {
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .menu-item {
+    background: #131829;
+    border-radius: 14px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 1px solid #ffffff0d;
+    text-decoration: none;
+    color: #fff;
+  }
+
+  .menu-item:active { transform: scale(0.98); }
+  .menu-item:hover { background: #1a2036; }
+
+  .menu-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .menu-icon-box {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: #1a2036;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  .menu-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .chevron {
+    color: #8b93a7;
+    font-size: 18px;
+  }
+
+  /* BOTTOM NAV */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 480px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, #1a1f33, #131829);
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0 14px;
+    border-top: 1px solid #ffffff1a;
+    box-shadow: 0 -8px 30px rgba(0,0,0,0.5);
+    border-top-left-radius: 22px;
+    border-top-right-radius: 22px;
+  }
+
+  .nav-item {
+    flex: 1;
+    text-align: center;
+    font-size: 10px;
+    color: #8b93a7;
+    cursor: pointer;
+    font-weight: 500;
+  }
+
+  .nav-item.active { color: #fff; font-weight: 700; }
+
+  .nav-item.active .nav-icon {
+    background: linear-gradient(135deg, #dc2626, #ef4444);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.5);
+    color: #fff;
+  }
+
+  .nav-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    width: 36px;
+    height: 36px;
+    margin: 0 auto 4px;
+    border-radius: 12px;
+    transition: 0.2s;
+  }
+
+  /* LOGOUT BUTTON */
+  .logout-btn {
+    margin: 20px 16px;
+    width: calc(100% - 32px);
+    background: #dc2626;
+    color: #fff;
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<!-- PROFILE TOP -->
+<div class="profile-top">
+  <div class="avatar" id="avatar">👤</div>
+  <div class="username" id="username">Username</div>
+  <div class="arena-coin">ArenaCoin: <strong id="coinBalance">0</strong></div>
+</div>
+
+<!-- STATS -->
+<div class="stats-card">
+  <div class="stat-item">
+    <div class="stat-num">0</div>
+    <div class="stat-lbl">Matches Played</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">0</div>
+    <div class="stat-lbl">Total Kills</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">0</div>
+    <div class="stat-lbl">Winnings</div>
+  </div>
+</div>
+
+<!-- MENU -->
+<div class="menu-list">
+  <a class="menu-item" href="#" onclick="alert('My Rewards coming soon')">
+    <div class="menu-left">
+      <div class="menu-icon-box">🏅</div>
+      <div class="menu-text">My Rewards</div>
+    </div>
+    <div class="chevron">›</div>
+  </a>
+
+  <a class="menu-item" href="#" onclick="alert('Refer & Earn coming soon')">
+    <div class="menu-left">
+      <div class="menu-icon-box">👥</div>
+      <div class="menu-text">Refer & Earn</div>
+    </div>
+    <div class="chevron">›</div>
+  </a>
+
+  <a class="menu-item" href="#" onclick="alert('Edit profile coming soon')">
+    <div class="menu-left">
+      <div class="menu-icon-box">👤</div>
+      <div class="menu-text">My Profile</div>
+    </div>
+    <div class="chevron">›</div>
+  </a>
+
+  <a class="menu-item" href="wallet.html">
+    <div class="menu-left">
+      <div class="menu-icon-box">💼</div>
+      <div class="menu-text">My Wallet</div>
+    </div>
+    <div class="chevron">›</div>
+  </a>
+
+  <a class="menu-item" href="#" onclick="alert('Statistics coming soon')">
+    <div class="menu-left">
+      <div class="menu-icon-box">📊</div>
+      <div class="menu-text">My Statistics</div>
+    </div>
+    <div class="chevron">›</div>
+  </a>
+
+  <a class="menu-item" href="#" onclick="alert('Support: support@denzarena.com')">
+    <div class="menu-left">
+      <div class="menu-icon-box">🎧</div>
+      <div class="menu-text">Customer Support</div>
+    </div>
+    <div class="chevron">›</div>
+  </a>
+</div>
+
+<button class="logout-btn" onclick="logout()">Logout</button>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <div class="nav-item" onclick="alert('Gifts coming soon')">
+    <div class="nav-icon">🎁</div>Gifts
+  </div>
+  <div class="nav-item" onclick="alert('Quizzes coming soon')">
+    <div class="nav-icon">❓</div>Quizzes
+  </div>
+  <div class="nav-item" onclick="window.location.href='home.html'">
+    <div class="nav-icon">🏠</div>Home
+  </div>
+  <div class="nav-item" onclick="alert('Winners coming soon')">
+    <div class="nav-icon">🏆</div>Winners
+  </div>
+  <div class="nav-item active">
+    <div class="nav-icon">👤</div>Profile
+  </div>
+</div>
+
+<script>
+  // লগইন চেক
+  const userData = localStorage.getItem('denz_user');
+  if (!userData) window.location.href = 'index.html';
+
+  // ইউজার ডেটা লোড
+  const user = JSON.parse(userData);
+
+  // Email থেকে username বানাও
+  const username = user.email.split('@')[0];
+  document.getElementById('username').textContent = username.charAt(0).toUpperCase() + username.slice(1);
+  document.getElementById('avatar').textContent = username.charAt(0).toUpperCase();
+
+  // Coin balance
+  const coin = localStorage.getItem('denz_coin') || '0';
+  document.getElementById('coinBalance').textContent = coin;
+
+  // লগআউট
+  function logout() {
+    if (confirm('Are you sure you want to logout?')) {
+      localStorage.removeItem('denz_user');
+      window.location.href = 'index.html';
+    }
+  }
+</script>
+
+</body>
+</html>
