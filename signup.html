@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>Sign Up — LG Tousif Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    min-height: 100vh;
+    background: #05070f;
+    color: #fff;
+    padding: 30px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  .bg-decor {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .bg-decor::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, #3B5BDB44, transparent 70%);
+    border-radius: 50%;
+    animation: pulse 6s ease-in-out infinite;
+  }
+
+  .bg-decor::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -100px;
+    width: 350px; height: 350px;
+    background: radial-gradient(circle, #00BFA544, transparent 70%);
+    border-radius: 50%;
+    animation: pulse 6s ease-in-out infinite 3s;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+  }
+
+  .signup-box {
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Back button */
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #131829;
+    border-radius: 10px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    margin-bottom: 20px;
+    border: 1px solid #ffffff0f;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .header .badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #3B5BDB, #6366f1);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+
+  .header h1 {
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+
+  .header p {
+    font-size: 13px;
+    color: #8b93a7;
+  }
+
+  /* Input */
+  .input-group {
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .input-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #8b93a7;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  .input-wrap { position: relative; }
+
+  .input-wrap input {
+    width: 100%;
+    padding: 15px 46px;
+    background: #131829;
+    border: 1.5px solid #ffffff0f;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+    transition: 0.25s;
+  }
+
+  .input-wrap input::placeholder { color: #555e75; }
+
+  .input-wrap input:focus {
+    border-color: #3B5BDB;
+    background: #1a2036;
+    box-shadow: 0 0 0 4px #3B5BDB22;
+  }
+
+  .input-icon-left {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #555e75;
+    font-size: 16px;
+    pointer-events: none;
+  }
+
+  .input-icon-right {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #555e75;
+    font-size: 16px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  /* Password strength */
+  .strength-bar {
+    display: flex;
+    gap: 4px;
+    margin-top: 8px;
+  }
+
+  .strength-bar div {
+    flex: 1;
+    height: 3px;
+    background: #1a2036;
+    border-radius: 2px;
+    transition: 0.3s;
+  }
+
+  .strength-text {
+    font-size: 11px;
+    margin-top: 4px;
+    color: #8b93a7;
+  }
+
+  /* Checkbox */
+  .terms {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 20px 0;
+    font-size: 12px;
+    color: #8b93a7;
+    line-height: 1.5;
+  }
+
+  .terms input {
+    margin-top: 2px;
+    accent-color: #3B5BDB;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+  }
+
+  .terms a {
+    color: #3B5BDB;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  /* Button */
+  .btn-primary {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #3B5BDB, #6366f1);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: 0.25s;
+    box-shadow: 0 8px 20px #3B5BDB44;
+  }
+
+  .btn-primary:active { transform: scale(0.98); }
+
+  /* Error */
+  .error-msg {
+    color: #ef4444;
+    font-size: 12px;
+    margin-top: -8px;
+    margin-bottom: 12px;
+    display: none;
+  }
+
+  .error-msg.show { display: block; }
+
+  /* Login link */
+  .login-row {
+    text-align: center;
+    color: #8b93a7;
+    font-size: 13px;
+    margin-top: 22px;
+  }
+
+  .login-row a {
+    color: #3B5BDB;
+    font-weight: 700;
+    text-decoration: none;
+    margin-left: 4px;
+  }
+
+  /* Premium badge */
+  .premium-badge {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #ffd700, #ff9800);
+    color: #000;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 12px #ffd70066;
+    z-index: 100;
+    animation: shine 2s linear infinite;
+    background-size: 200% 100%;
+  }
+
+  @keyframes shine {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="premium-badge">✨ PREMIUM</div>
+<div class="bg-decor"></div>
+
+<div class="signup-box">
+  <a href="index.html" class="back-btn">←</a>
+
+  <div class="header">
+    <div class="badge">JOIN US</div>
+    <h1>Create Account</h1>
+    <p>Sign up to start winning tournaments</p>
+  </div>
+
+  <!-- Full Name -->
+  <div class="input-group">
+    <label>Full Name</label>
+    <div class="input-wrap">
+      <span class="input-icon-left">👤</span>
+      <input type="text" id="fullname" placeholder="Enter your full name" />
+    </div>
+  </div>
+
+  <!-- Email -->
+  <div class="input-group">
+    <label>Email Address</label>
+    <div class="input-wrap">
+      <span class="input-icon-left">✉</span>
+      <input type="email" id="email" placeholder="example@gmail.com" />
+    </div>
+  </div>
+
+  <!-- Phone -->
+  <div class="input-group">
+    <label>Phone Number</label>
+    <div class="input-wrap">
+      <span class="input-icon-left">📱</span>
+      <input type="tel" id="phone" placeholder="+880 1XXX XXXXXX" />
+    </div>
+  </div>
+
+  <!-- Password -->
+  <div class="input-group">
+    <label>Password</label>
+    <div class="input-wrap">
+      <span class="input-icon-left">🔒</span>
+      <input type="password" id="password" placeholder="Create a strong password" oninput="checkStrength()" />
+      <span class="input-icon-right" id="eyeIcon" onclick="togglePassword()">👁</span>
+    </div>
+    <div class="strength-bar">
+      <div id="s1"></div>
+      <div id="s2"></div>
+      <div id="s3"></div>
+      <div id="s4"></div>
+    </div>
+    <div class="strength-text" id="strengthText"></div>
+  </div>
+
+  <!-- Terms -->
+  <div class="terms">
+    <input type="checkbox" id="terms" />
+    <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a> of LG Tousif Group</label>
+  </div>
+
+  <p class="error-msg" id="errorMsg">Please fill all fields</p>
+
+  <!-- Button -->
+  <button class="btn-primary" onclick="signupUser()">Create Account</button>
+
+  <div class="login-row">
+    Already have an account?
+    <a href="index.html">Login</a>
+  </div>
+</div>
+
+<script>
+  const passInput = document.getElementById('password');
+  const eyeIcon   = document.getElementById('eyeIcon');
+
+  function togglePassword() {
+    if (passInput.type === 'password') {
+      passInput.type = 'text';
+      eyeIcon.textContent = '🙈';
+    } else {
+      passInput.type = 'password';
+      eyeIcon.textContent = '👁';
+    }
+  }
+
+  function checkStrength() {
+    const val = passInput.value;
+    let strength = 0;
+    if (val.length >= 6) strength++;
+    if (val.length >= 10) strength++;
+    if (/[A-Z]/.test(val)) strength++;
+    if (/[0-9]/.test(val)) strength++;
+    if (/[^A-Za-z0-9]/.test(val)) strength++;
+
+    const bars = ['s1', 's2', 's3', 's4'];
+    const colors = ['#ef4444', '#f59e0b', '#eab308', '#22c55e'];
+    const texts = ['Weak', 'Fair', 'Good', 'Strong'];
+
+    bars.forEach((b, i) => {
+      const el = document.getElementById(b);
+      if (i < strength) {
+        el.style.background = colors[Math.min(strength - 1, 3)];
+      } else {
+        el.style.background = '#1a2036';
+      }
+    });
+
+    document.getElementById('strengthText').textContent = val ? 'Strength: ' + texts[Math.min(strength - 1, 3)] : '';
+  }
+
+  function signupUser() {
+    const name = document.getElementById('fullname').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const pass = passInput.value.trim();
+    const terms = document.getElementById('terms').checked;
+    const errorMsg = document.getElementById('errorMsg');
+
+    if (!name || !email || !phone || !pass) {
+      errorMsg.textContent = 'Please fill all fields.';
+      errorMsg.classList.add('show');
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errorMsg.textContent = 'Please enter a valid email.';
+      errorMsg.classList.add('show');
+      return;
+    }
+
+    if (pass.length < 6) {
+      errorMsg.textContent = 'Password must be at least 6 characters.';
+      errorMsg.classList.add('show');
+      return;
+    }
+
+    if (!terms) {
+      errorMsg.textContent = 'Please accept the terms & conditions.';
+      errorMsg.classList.add('show');
+      return;
+    }
+
+    // Save pending user for OTP verification
+    localStorage.setItem('denz_pending_user', JSON.stringify({ name, email, phone, pass }));
+    window.location.href = 'otp.html';
+  }
+</script>
+
+</body>
+</html>
