@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>Reset Password — LG Tousif Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    min-height: 100vh;
+    background: #05070f;
+    color: #fff;
+    padding: 30px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  .bg-decor {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .bg-decor::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, #22c55e44, transparent 70%);
+    border-radius: 50%;
+    animation: pulse 6s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+  }
+
+  .box {
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #131829;
+    border-radius: 10px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    margin-bottom: 24px;
+    border: 1px solid #ffffff0f;
+  }
+
+  .icon {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 22px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    box-shadow: 0 0 0 0 #22c55e88;
+    animation: pulseRing 2s ease-out infinite;
+  }
+
+  @keyframes pulseRing {
+    0% { box-shadow: 0 0 0 0 #22c55e88; }
+    70% { box-shadow: 0 0 0 30px #22c55e00; }
+    100% { box-shadow: 0 0 0 0 #22c55e00; }
+  }
+
+  h1 {
+    font-size: 26px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .sub {
+    text-align: center;
+    color: #8b93a7;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+
+  .input-group {
+    margin-bottom: 18px;
+    position: relative;
+  }
+
+  .input-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #8b93a7;
+    margin-bottom: 8px;
+  }
+
+  .input-wrap { position: relative; }
+
+  .input-wrap input {
+    width: 100%;
+    padding: 15px 46px;
+    background: #131829;
+    border: 1.5px solid #ffffff0f;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+    transition: 0.25s;
+  }
+
+  .input-wrap input:focus {
+    border-color: #3B5BDB;
+    background: #1a2036;
+    box-shadow: 0 0 0 4px #3B5BDB22;
+  }
+
+  .input-icon-left {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #555e75;
+    font-size: 16px;
+  }
+
+  .input-icon-right {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #555e75;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #3B5BDB, #6366f1);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.25s;
+    box-shadow: 0 8px 20px #3B5BDB44;
+    margin-top: 10px;
+  }
+
+  .btn-primary:active { transform: scale(0.98); }
+
+  .otp-hint {
+    margin-top: 22px;
+    padding: 12px;
+    background: #16a34a11;
+    border: 1px solid #22c55e33;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 12px;
+    color: #22c55e;
+  }
+
+  .otp-hint strong {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: #fff;
+    display: block;
+    margin-top: 6px;
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-decor"></div>
+
+<div class="box">
+  <a href="forgot.html" class="back-btn">←</a>
+
+  <div class="icon">🔐</div>
+  <h1>Reset Password</h1>
+  <p class="sub">Enter the OTP sent to your email and create a new password.</p>
+
+  <div class="input-group">
+    <label>OTP Code</label>
+    <div class="input-wrap">
+      <span class="input-icon-left">#</span>
+      <input type="text" id="otp" placeholder="6-digit code" maxlength="6" inputmode="numeric" />
+    </div>
+  </div>
+
+  <div class="input-group">
+    <label>New Password</label>
+    <div class="input-wrap">
+      <span class="input-icon-left">🔒</span>
+      <input type="password" id="newPass" placeholder="Enter new password" />
+      <span class="input-icon-right" onclick="togglePass('newPass', this)">👁</span>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <label>Confirm Password</label>
+    <div class="input-wrap">
+      <span class="input-icon-left">🔒</span>
+      <input type="password" id="confirmPass" placeholder="Re-enter password" />
+      <span class="input-icon-right" onclick="togglePass('confirmPass', this)">👁</span>
+    </div>
+  </div>
+
+  <button class="btn-primary" onclick="resetPassword()">Reset Password</button>
+
+  <div class="otp-hint">
+    🔐 Demo OTP (for testing):
+    <strong id="demoOtp">------</strong>
+  </div>
+</div>
+
+<script>
+  const email = localStorage.getItem('denz_reset_email');
+  if (!email) window.location.href = 'forgot.html';
+
+  const realOtp = localStorage.getItem('denz_reset_otp');
+  document.getElementById('demoOtp').textContent = realOtp;
+
+  function togglePass(id, el) {
+    const input = document.getElementById(id);
+    if (input.type === 'password') {
+      input.type = 'text';
+      el.textContent = '🙈';
+    } else {
+      input.type = 'password';
+      el.textContent = '👁';
+    }
+  }
+
+  function resetPassword() {
+    const otp = document.getElementById('otp').value.trim();
+    const np = document.getElementById('newPass').value.trim();
+    const cp = document.getElementById('confirmPass').value.trim();
+
+    if (!otp || !np || !cp) {
+      alert('❌ Please fill all fields.');
+      return;
+    }
+
+    if (otp !== realOtp) {
+      alert('❌ Invalid OTP!');
+      return;
+    }
+
+    if (np.length < 6) {
+      alert('❌ Password must be at least 6 characters.');
+      return;
+    }
+
+    if (np !== cp) {
+      alert('❌ Passwords do not match!');
+      return;
+    }
+
+    // Success
+    localStorage.removeItem('denz_reset_email');
+    localStorage.removeItem('denz_reset_otp');
+
+    alert('✅ Password reset successfully!\n\nPlease login with your new password.');
+    window.location.href = 'index.html';
+  }
+</script>
+
+</body>
+</html>
